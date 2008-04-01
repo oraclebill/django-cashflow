@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block main_content %}
+
+<h2>{% trans "Accounts" %}</h2>
+
+<a href="{% url add-account %}">{% trans "New account" %}</a>
+
+<table>
+	<tr>
+		<th>{% trans "Number" %}</th>
+		<th>{% trans "Description" %}</th>
+		<th>{% trans "Balance" %}</th>
+	</tr>
+{% for account in accounts %}
+	<tr>
+		<td><a href="{% url account-details account.id %}">{{ account.number }}</a></td>
+		<td>{{ account.description }}</td>
+		<td>{{ account.balance }}</td>
+	</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
