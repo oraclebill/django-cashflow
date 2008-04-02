@@ -75,8 +75,25 @@ def add_money(request, number):
     account = get_object_or_404(Account, number=number, user=request.user)
     return _simple_transaction_request(request, account, account.add_money)
 
+
 @login_required
 @render_to('cashflow/withdraw_money.html')
 def withdraw_money(request, number):
     account = get_object_or_404(Account, number=number, user=request.user)
     return _simple_transaction_request(request, account, account.withdraw_money)
+
+
+@login_required
+@render_to('cashflow/move_money.html')
+def move_money(request, number):
+    account = get_object_or_404(Account, number=number, user=request.user)
+    if request.method == 'POST':
+        form = MoveMoneyForm(request.POST, from_account=account)
+        if form.is_valid():
+            account.move_money(to_account=form.cleaned_data['account'],
+                               amount=form.cleaned_data['amount'],
+                               description=form.cleaned_data['description'])
+            return HttpResponseRedirect(reverse("account-details", args=[account.number]))
+    else:
+        form = MoveMoneyForm(from_account=account)
+    return {'form':form}
