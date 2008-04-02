@@ -7,4 +7,5 @@ urlpatterns = patterns('django_cashflow.views',
     url(r'^operation/add/(?P<number>.*)/$', 'add_money', name="cashflow-add-money"),
     url(r'^operation/withdraw/(?P<number>.*)/$', 'withdraw_money', name="cashflow-withdraw-money"),
     url(r'^operation/move/(?P<number>.*)/$', 'move_money', name="cashflow-move-money"),
+    url(r'^history/(?P<number>.*)/$', 'history', name="cashflow-history"),
 )

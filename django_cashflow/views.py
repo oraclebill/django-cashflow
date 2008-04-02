@@ -97,3 +97,36 @@ def move_money(request, number):
     else:
         form = MoveMoneyForm(from_account=account)
     return {'form':form}
+
+
+@login_required
+@render_to('cashflow/history.html')
+def history(request, number):
+    account = get_object_or_404(Account, number=number, user=request.user)
+    from django.db.models import Q
+    transactions = Transaction.objects.filter(
+            Q(account=account) | Q(recipient_account=account)).order_by('-created')
+            
+    history_items = []
+    for t in transactions:
+        item = {'description':t.description, 'datetime':t.created, 
+                'debit':'', 'credit':'', 'correspondent':''}
+        if t.type == TX_ADD:
+            item['credit'] = t.amount
+            item['balance'] = t.balance
+        elif t.type == TX_WITHDRAW:
+            item['debit'] = t.amount
+            item['balance'] = t.balance
+        elif t.type == TX_MOVE:
+            if t.account == account:
+                item['debit'] = t.amount
+                item['balance'] = t.balance
+                item['correspondent'] = t.recipient_account
+            else:
+                item['credit'] = t.amount
+                item['balance'] = t.recipient_balance
+                item['correspondent'] = t.account
+        history_items.append(item)
+        
+    return {'history':history_items}
+    

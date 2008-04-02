@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block main_content %}
+
+<h2>{% trans "History" %}</h2>
+
+<table>
+	<tr>
+		<th> </th>
+		<th>{% trans "Date" %}</th>
+		<th>{% trans "Credit" %}</th>
+		<th>{% trans "Debit" %}</th>
+		<th>{% trans "Balance" %}</th>
+		<th>{% trans "Correspondent" %}</th>
+		<th>{% trans "Description" %}</th>
+	</tr>
+{% for item in history %}
+	<tr>
+		<td>
+			{% if item.credit %}
+				<img src="{{MEDIA_URL}}img/money_add.png">
+			{% else %}
+				<img src="{{MEDIA_URL}}img/money_delete.png">
+			{% endif%}
+		</td>
+		<td>
+			{{item.datetime}}
+		</td>
+		<td>
+			{{item.credit}}
+		</td>
+		<td>
+			{{item.debit}}
+		</td>
+		<td>
+			{{item.balance}}
+		</td>
+		<td>
+			{{item.correspondent}}
+		</td>
+		<td>
+			{{item.description}}
+		</td>
+	</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
