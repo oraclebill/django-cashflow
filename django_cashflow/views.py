@@ -52,6 +52,6 @@ def add_account(request):
 
 @login_required
 @render_to('cashflow/account_details.html')
-def account_details(request, id):
-    account = get_object_or_404(Account, id=id, user=request.user)
+def account_details(request, number):
+    account = get_object_or_404(Account, number=number, user=request.user)
     return locals()

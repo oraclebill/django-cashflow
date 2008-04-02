@@ -87,8 +87,6 @@ INSTALLED_APPS = (
 )
 
 
-CASHFLOW_DEFAULT_CURRENCY = "USD"
-
 try:
     from localsettings import *
 except:
