@@ -26,6 +26,8 @@ class Account(models.Model):
 	@commit_on_success
 	def withdraw_money(self, amount, description):
 		self.balance -= amount
+		if self.balance.amount < 0:
+			raise Exception("Withdraw amount couldn't be more than account balance")
 		transaction = self._create_transaction(TX_WITHDRAW, amount, description)
 		self.save()
 		transaction.save()
