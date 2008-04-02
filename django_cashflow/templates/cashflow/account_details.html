@@ -11,8 +11,8 @@
 <p>{{ account.description }}<p>
 
 <ul>
-	<li><a href="#" class="plus">{% trans "Add money" %}</a></li>
-	<li><a href="#" class="minus">{% trans "Withdraw money" %}</a></li>
+	<li><a href="{% url cashflow-add-money account.number %}" class="plus">{% trans "Add money" %}</a></li>
+	<li><a href="{% url cashflow-withdraw-money account.number %}" class="minus">{% trans "Withdraw money" %}</a></li>
 	<li><a href="#" class="move">{% trans "Move money to another account" %}</a></li>
 	<li><a href="#" class="history">{% trans "Operations history" %}</a></li>
 </ul>

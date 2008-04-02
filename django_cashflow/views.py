@@ -55,3 +55,28 @@ def add_account(request):
 def account_details(request, number):
     account = get_object_or_404(Account, number=number, user=request.user)
     return locals()
+
+
+def _simple_transaction_request(request, proc_method):
+    if request.method == 'POST':
+        form = TransactionForm(request.POST)
+        if form.is_valid():
+            proc_method(amount=form.cleaned_data['amount'],
+                        description=form.cleaned_data['description'])
+            return HttpResponseRedirect(reverse("list-accounts"))
+    else:
+        form = TransactionForm()
+    return locals()
+
+
+@login_required
+@render_to('cashflow/add_money.html')
+def add_money(request, number):
+    account = get_object_or_404(Account, number=number, user=request.user)
+    return _simple_transaction_request(request, account.add_money)
+
+@login_required
+@render_to('cashflow/withdraw_money.html')
+def withdraw_money(request, number):
+    account = get_object_or_404(Account, number=number, user=request.user)
+    return _simple_transaction_request(request, account.withdraw_money)
