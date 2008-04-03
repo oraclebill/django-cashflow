@@ -1,7 +1,7 @@
 from django import newforms as forms
 from models import *
 
-__all__ = ('AccountForm', 'TransactionForm', 'MoveMoneyForm',)
+__all__ = ('AccountForm', 'TransactionForm', 'MoveMoneyForm', 'FilterHistoryForm', )
 
 
 class AccountForm(forms.ModelForm):
@@ -28,3 +28,9 @@ class MoveMoneyForm(forms.Form):
     account = forms.ModelChoiceField(None)
     amount = forms.DecimalField(max_digits=12, decimal_places=2, min_value=0)
     description = forms.CharField(widget=forms.Textarea())
+
+
+class FilterHistoryForm(forms.Form):
+    date_from = forms.DateField(required=False)
+    date_to = forms.DateField(required=False)
+    keywords = forms.CharField(required=False)

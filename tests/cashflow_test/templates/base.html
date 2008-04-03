@@ -1,6 +1,17 @@
 <html>
 <head>
 	<title>{% block title %}Django cash-flow{% endblock %}</title>
+	<script src="{{MEDIA_URL}}js/jquery-1.2.3.pack.js"></script>
+	<script src="{{MEDIA_URL}}js/ui.datepicker.js"></script>
+	<link rel="stylesheet" href="{{MEDIA_URL}}css/flora.datepicker.css" type="text/css" media="screen" title="Flora (Default)">
+  
+	<script>
+		$(document).ready(function(){
+			$('#id_date_from').datepicker();
+			$('#id_date_to').datepicker();
+		});
+ 	</script>
+	
 </head>
 <body>
 	<div id="#header">

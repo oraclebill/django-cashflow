@@ -104,11 +104,23 @@ def move_money(request, number):
 def history(request, number):
     account = get_object_or_404(Account, number=number, user=request.user)
     from django.db.models import Q
-    transactions = Transaction.objects.filter(
+    queryset = Transaction.objects.filter(
             Q(account=account) | Q(recipient_account=account)).order_by('-created')
-            
+    
+    if request.method == 'POST':
+        form = FilterHistoryForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['date_from']:
+                queryset = queryset.filter(created__gte=form.cleaned_data['date_from'])
+            if form.cleaned_data['date_to']:
+                queryset = queryset.filter(created__lte=form.cleaned_data['date_to'])
+            if form.cleaned_data['keywords']:
+                 queryset = queryset.filter(description__contains=form.cleaned_data['keywords'])
+    else:
+         form = FilterHistoryForm()
+    
     history_items = []
-    for t in transactions:
+    for t in queryset:
         item = {'description':t.description, 'datetime':t.created, 
                 'debit':'', 'credit':'', 'correspondent':''}
         if t.type == TX_ADD:
@@ -128,5 +140,5 @@ def history(request, number):
                 item['correspondent'] = t.account
         history_items.append(item)
         
-    return {'history':history_items}
+    return {'history':history_items, 'form':form}
     
