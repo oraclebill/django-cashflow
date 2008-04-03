@@ -1,6 +1,8 @@
 <html>
 <head>
 	<title>{% block title %}Django cash-flow{% endblock %}</title>
+	<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen" title="Flora (Default)">
+	
 	<script src="{{MEDIA_URL}}js/jquery-1.2.3.pack.js"></script>
 	<script src="{{MEDIA_URL}}js/ui.datepicker.js"></script>
 	<link rel="stylesheet" href="{{MEDIA_URL}}css/flora.datepicker.css" type="text/css" media="screen" title="Flora (Default)">
@@ -14,13 +16,23 @@
 	
 </head>
 <body>
-	<div id="#header">
-		{% if user.is_authenticated %}
-			<a href="{% url auth_logout %}">Logout ({{ user }})</a>
-		{% endif %}
-	</div>
-	<div id="#main">
-		{% block main_content %}{% endblock %}
+	<div id="container">
+		<div id="mainheaderWrap">
+			<div id="headerWrap">
+				<div id="headerlogo">
+					<a href="/">Django cashflow</a>
+				</div>
+				<div id="headermenu" class="header_nav">
+					{% if user.is_authenticated %}
+						<a href="{% url auth_logout %}">Logout ({{ user }})</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div id="main">
+			{% block main_content %}{% endblock %}
+		</div>
+		
 	</div>
 </body>
 </html>

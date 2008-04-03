@@ -1,0 +1,75 @@
+body {
+	font-family:Trebuchet MS,Arial,Helvetica,Sans-serif;
+	font-size:14px;
+	height:100%;
+	margin:0pt;
+	padding:0pt;
+
+}
+a {
+	color:#64A4A0;
+	text-decoration:underline;
+}
+a:hover {
+	color:#64A4A0;
+	text-decoration:none;
+}
+#container {
+	margin:auto;
+	padding:0pt;
+	width:100%;
+}
+
+#mainheaderWrap {
+	background-color:#000000;
+	padding-bottom:8px;
+}
+
+#headerWrap {
+	background:#000000;
+	height:41px;
+	margin:0pt;
+	padding:0pt;
+	width:80%;
+	padding-left: 24px;
+}
+
+div #headerlogo {
+	float: left;
+}
+
+div #headerlogo a {
+	color: white;
+	font-size:24px;
+}
+
+#header_top {
+	margin-left:auto;
+	margin-right:auto;
+	width:960px;
+}
+
+div.header_nav {
+	float: right;
+}
+
+div.header_nav a {
+	color: white;
+}
+
+#main {
+	padding-left: 32px;
+}
+
+
+.plus { padding-left:22px; background:url(../img/money_add.png) 0 .2em no-repeat; }
+.minus { padding-left:22px; background:url(../img/money_delete.png) 0 .2em no-repeat; }
+.move { padding-left:22px; background:url(../img/tab_go.png) 0 .2em no-repeat; }
+.history { padding-left:22px; background:url(../img/folder_table.png) 0 .2em no-repeat; }
+
+
+/* TABLES */
+table.data { border-collapse:collapse; border-color:#ccc; }
+table.data  tr td, table.data  tr  th { border-bottom:1px solid #eee; vertical-align:top; padding:5px; }
+table.data  tr th { text-align:left; font-size:12px; font-weight:bold; }
+
