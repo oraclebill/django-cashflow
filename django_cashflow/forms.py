@@ -8,6 +8,7 @@ def add_empty_label(choices, empty_label=u''):
     a.insert(0, ('', empty_label))
     return tuple(a) 
 
+#TODO: clean_number(check exist/not exist)
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
