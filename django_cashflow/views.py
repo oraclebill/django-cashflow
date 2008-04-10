@@ -62,6 +62,7 @@ def _simple_transaction_request(request, account, proc_method):
         form = TransactionForm(request.POST)
         if form.is_valid():
             proc_method(amount=form.cleaned_data['amount'],
+                        tag=form.cleaned_data['tag'],
                         description=form.cleaned_data['description'])
             return HttpResponseRedirect(reverse("account-details", args=[account.number]))
     else:
@@ -92,6 +93,7 @@ def move_money(request, number):
         if form.is_valid():
             account.move_money(to_account=form.cleaned_data['account'],
                                amount=form.cleaned_data['amount'],
+                               tag=form.cleaned_data['tag'],
                                description=form.cleaned_data['description'])
             return HttpResponseRedirect(reverse("account-details", args=[account.number]))
     else:
@@ -121,7 +123,7 @@ def history(request, number):
     
     history_items = []
     for t in queryset:
-        item = {'description':t.description, 'datetime':t.created, 
+        item = {'description':t.description, 'datetime':t.created, 'tag': t.tag,
                 'debit':'', 'credit':'', 'correspondent':''}
         if t.type == TX_ADD:
             item['credit'] = t.amount
