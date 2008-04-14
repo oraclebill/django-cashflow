@@ -1,7 +1,17 @@
 from django import newforms as forms
+from money.contrib.django.forms import MoneyField
 from models import *
 
+
 __all__ = ('AccountForm', 'TransactionForm', 'MoveMoneyForm', 'FilterHistoryForm', )
+
+
+def get_def_money():
+    from django.conf import settings
+    from money import Money
+    if hasattr(settings, 'CASHFLOW_DEFAULT_CURRENCY'):
+        return Money(0, settings.CASHFLOW_DEFAULT_CURRENCY)
+    return None
 
 def add_empty_label(choices, empty_label=u''):
     a = list(choices)
@@ -13,6 +23,7 @@ class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
         exclude = ('user',)
+    balance = MoneyField(currency_widget=forms.TextInput(), initial=get_def_money())
 
         
 class TransactionForm(forms.Form):

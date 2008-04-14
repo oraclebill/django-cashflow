@@ -87,6 +87,8 @@ INSTALLED_APPS = (
     'django_cashflow',
 )
 
+CASHFLOW_DEFAULT_CURRENCY = u'USD'
+
 
 try:
     from localsettings import *
