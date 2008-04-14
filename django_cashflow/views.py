@@ -128,18 +128,22 @@ def history(request, number):
         if t.type == TX_ADD:
             item['credit'] = t.amount
             item['balance'] = t.balance
+            item['balance_before'] = t.balance - t.amount
         elif t.type == TX_WITHDRAW:
             item['debit'] = t.amount
             item['balance'] = t.balance
+            item['balance_before'] = t.balance + t.amount
         elif t.type == TX_MOVE:
             if t.account == account:
                 item['debit'] = t.amount
                 item['balance'] = t.balance
                 item['correspondent'] = t.recipient_account
+                item['balance_before'] = t.balance + t.amount
             else:
                 item['credit'] = t.amount
                 item['balance'] = t.recipient_balance
                 item['correspondent'] = t.account
+                item['balance_before'] = t.recipient_balance - t.amount
         history_items.append(item)
         
     return {'history':history_items, 'form':form}
