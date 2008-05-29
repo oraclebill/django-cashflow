@@ -24,12 +24,19 @@ def add_empty_label(choices, empty_label=u''):
     a.insert(0, ('', empty_label))
     return tuple(a) 
 
-#TODO: clean_number(check exist/not exist)
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
         exclude = ('user',)
     balance = forms.CharField(max_length=42, help_text="Example: USD 100")
+    
+    def clean_number(self):
+        value = self.cleaned_data['number']
+        try:
+            Account.objects.get(number=value)
+            raise forms.ValidationError("This account number alredy exist.") 
+        except Account.DoesNotExist:
+            return value
     
     def clean_balance(self):
         value = self.cleaned_data['balance']
